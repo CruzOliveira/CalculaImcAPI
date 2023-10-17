@@ -12,31 +12,37 @@ namespace Application.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class CriadorUserController : Controller
+    public class AlterarPesoAlturaController : Controller
     {
-        private readonly ICriadorUserService service;
+        private readonly IAlterarPesoAlturaService service;
         private readonly IMapper mapper;
         private readonly string chaveToken;
 
-        public CriadorUserController(IConfiguration configuration, ICriadorUserService service, IMapper mapper)
+        public AlterarPesoAlturaController(IConfiguration configuration, IAlterarPesoAlturaService service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
             this.chaveToken = configuration.GetSection("Seguranca:ChaveToken").Value;
         }
 
-        [HttpPost]
+        [HttpPut]
         [AllowAnonymous]
-        public async Task<IActionResult> Create(Domain.DTO.CriadorUser entityIn)
+        public async Task<IActionResult> Update(string cpf, decimal peso, decimal altura)
         {
             //var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
             //if (autenticacao == null)
             //    return Unauthorized();
 
-            var entity = mapper.Map<CriadorUser>(entityIn);
+            //var entity = mapper.Map<AlterarPesoAltura>(string cpf, int peso, int altura);
             //entity.User = autenticacao.CodigoUsuario;
 
-            var resultado = await service.CreateUserAsync(entity);
+
+            if (cpf.Length != 11) return new BadRequestObjectResult("CPF INVALIDO");
+
+            var resultado = await service.UpdatePesoAlturaAsync(cpf, peso, altura);
+
+            
+
             if (resultado.BadRequest)
                 return new BadRequestObjectResult(resultado);
 
@@ -59,7 +65,7 @@ namespace Application.Controllers
 
         //// GET api/todo
         ///// <summary>
-        ///// Obtém um(a) CriadorUser
+        ///// Obtém um(a) AlterarPesoAltura
         ///// </summary>
         //[HttpGet("{codigo}")]
         //public async Task<IActionResult> Get(int codigo)
@@ -77,16 +83,16 @@ namespace Application.Controllers
 
         //// PATCH api/todo
         ///// <summary>
-        ///// Retorna uma lista de CriadorUser
+        ///// Retorna uma lista de AlterarPesoAltura
         ///// </summary>
         //[HttpPatch]
-        //public async Task<IActionResult> Select(Domain.DTO.CriadorUser entityIn)
+        //public async Task<IActionResult> Select(Domain.DTO.AlterarPesoAltura entityIn)
         //{
         //    var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
         //    if (autenticacao == null)
         //        return Unauthorized();
 
-        //    var entity = mapper.Map<CriadorUser>(entityIn);
+        //    var entity = mapper.Map<AlterarPesoAltura>(entityIn);
 
         //    var resultado = await service.SelectAsync(entity);
         //    if (resultado.BadRequest)
@@ -97,16 +103,16 @@ namespace Application.Controllers
 
         //// POST api/todo
         ///// <summary>
-        ///// Cria um(a) novo(a) CriadorUser
+        ///// Cria um(a) novo(a) AlterarPesoAltura
         ///// </summary>
         //[HttpPost]
-        //public async Task<IActionResult> Create(Domain.DTO.CriadorUser entityIn)
+        //public async Task<IActionResult> Create(Domain.DTO.AlterarPesoAltura entityIn)
         //{
         //    var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
         //    if (autenticacao == null)
         //        return Unauthorized();
 
-        //    var entity = mapper.Map<CriadorUser>(entityIn);
+        //    var entity = mapper.Map<AlterarPesoAltura>(entityIn);
         //    entity.User = autenticacao.CodigoUsuario;
 
         //    var resultado = await service.CreateAsync(entity);
@@ -119,16 +125,16 @@ namespace Application.Controllers
 
         //// PUT api/todo
         ///// <summary>
-        ///// Altera um(a) novo(a) CriadorUser
+        ///// Altera um(a) novo(a) AlterarPesoAltura
         ///// </summary>
         //[HttpPut]
-        //public async Task<IActionResult> Update(Domain.DTO.CriadorUser entityIn)
+        //public async Task<IActionResult> Update(Domain.DTO.AlterarPesoAltura entityIn)
         //{
         //    var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
         //    if (autenticacao == null)
         //        return Unauthorized();
 
-        //    var entity = mapper.Map<CriadorUser>(entityIn);
+        //    var entity = mapper.Map<AlterarPesoAltura>(entityIn);
         //    entity.User = autenticacao.CodigoUsuario;
 
         //    var resultado = await service.UpdateAsync(entity);
@@ -140,7 +146,7 @@ namespace Application.Controllers
 
         //// DELETE api/todo
         ///// <summary>
-        ///// Exclui um(a) CriadorUser
+        ///// Exclui um(a) AlterarPesoAltura
         ///// </summary>
         //[HttpDelete]
         //public async Task<IActionResult> Delete(int codigo)

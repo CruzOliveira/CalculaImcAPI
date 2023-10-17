@@ -162,9 +162,8 @@ namespace Application
             var connectionString = this.Configuration.GetValue<string>("ConnectionStrings:dbConnectionString");
 
             services.AddScoped<IDbConnection>(x => { return new SqlConnection(connectionString); });
+            services.AddScoped<IAlterarPesoAlturaService, AlterarPesoAlturaService>();
             services.AddScoped<ICriadorUserService, CriadorUserService>();
-            services.AddScoped<ICalculaIMCService, CalculaIMCService>();
-            services.AddScoped<ICalculaImcApplicationService, CalculaImcApplicationService>();
         }
 
         private void ConfigurarInfra(string chaveToken, IServiceCollection services)
@@ -177,9 +176,8 @@ namespace Application
 
         private void ConfigurarValidador(IServiceCollection services)
         {
-            services.AddScoped<IValidator<CalculaImcApplication>, CalculaImcApplicationValidator>();
             services.AddScoped<IValidator<CriadorUser>, CriadorUserValidator>();
-            services.AddScoped<IValidator<CalculaIMC>, CalculaIMCValidator>();
+            services.AddScoped<IValidator<AlterarPesoAltura>, AlterarPesoAlturaValidator>();
         }
         private void ConfigurarMapper(IServiceCollection services)
         {

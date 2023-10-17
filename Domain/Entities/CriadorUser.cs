@@ -1,4 +1,5 @@
 using Domain.Base;
+using System;
 
 namespace Domain.Entities
 {
@@ -9,8 +10,8 @@ namespace Domain.Entities
         public string email { get; set; }
         public string nome { get; set; }
         public string cpf { get; set; }
-        public string peso { get; set; }
-        public string altura { get; set; }
-        public string dt_nacimento { get; set; }
+        public decimal peso { get; set; }
+        public decimal altura { get; set; }
+        public DateTime dt_nacimento { get; set; }
     }
 }

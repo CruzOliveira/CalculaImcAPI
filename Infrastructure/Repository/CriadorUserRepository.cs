@@ -66,5 +66,37 @@ namespace Infrastructure.Repository
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        public async Task<CriadorUser> CreateUserAsync(CriadorUser entity)
+        {
+            var dynamic = new DynamicParameters();
+
+            try
+            {
+                dynamic.Add("USERNAME", entity.username);
+                dynamic.Add("PASSWORD", entity.password);
+                dynamic.Add("EMAIL", entity.email);
+                dynamic.Add("NOME", entity.nome);
+                dynamic.Add("CPF", entity.cpf);
+                dynamic.Add("PESO", entity.peso);
+                dynamic.Add("ALTURA", entity.altura);
+                dynamic.Add("DT_NACIMENTO", entity.dt_nacimento.ToString().Equals("01/01/0001 00:00:00") ? Convert.ToDateTime("1900-01-01") : entity.dt_nacimento);
+                dynamic.Add("retorno", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                var result = await dbConnection.ExecuteScalarAsync<CriadorUser>("IMC_SP_CRIACAO_USUARIO", dynamic, commandType: CommandType.StoredProcedure);
+                
+                int retorno = dynamic.Get<int>("retorno");
+
+                if (retorno == 0)
+                {
+                    throw new Exception("CPF INVALIDO!");
+                }
+                return result;
+            }
+            finally
+            {
+                dynamic = null;
+            }
+        }
     }
 }

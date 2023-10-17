@@ -118,5 +118,17 @@ namespace Services.Services
         {
             GC.SuppressFinalize(this);
         }
+
+        public async Task<Resultado<CriadorUser>> CreateUserAsync(CriadorUser entity)
+        {
+            try
+            {            
+                return Resultado<CriadorUser>.ComSucesso(await this.infrastructure.CreateUserAsync(entity));
+            }
+            catch (Exception exception)
+            {
+                return Resultado<CriadorUser>.ComErros(null, Resultado<CriadorUser>.AdicionarErro(Error.Criar(string.Empty, $"{exception}", TipoErro.Excecao, null)));
+            }
+        }
     }
 }
