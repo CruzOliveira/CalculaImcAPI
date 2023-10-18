@@ -122,8 +122,13 @@ namespace Services.Services
         public async Task<Resultado<CriadorUser>> CreateUserAsync(CriadorUser entity)
         {
             try
-            {            
-                return Resultado<CriadorUser>.ComSucesso(await this.infrastructure.CreateUserAsync(entity));
+            {
+                var resultado = await this.infrastructure.CreateUserAsync(entity);
+                if (resultado.retorno.Contains("Erro"))
+                {
+                    return Resultado<CriadorUser>.ComErros(null, Resultado<CriadorUser>.AdicionarErro(Error.Criar(string.Empty, resultado.retorno, TipoErro.Validacao, null)));
+                }
+                return Resultado<CriadorUser>.ComSucesso(resultado);
             }
             catch (Exception exception)
             {

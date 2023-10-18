@@ -40,7 +40,7 @@ namespace Application.Controllers
             if (resultado.BadRequest)
                 return new BadRequestObjectResult(resultado);
 
-            return new ObjectResult(resultado.Conteudo);
+            return new ObjectResult(resultado.Conteudo.retorno);
         }
 
         //[HttpGet]

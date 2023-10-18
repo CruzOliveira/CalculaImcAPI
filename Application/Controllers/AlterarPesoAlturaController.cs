@@ -29,24 +29,13 @@ namespace Application.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Update(string cpf, decimal peso, decimal altura)
         {
-            //var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
-            //if (autenticacao == null)
-            //    return Unauthorized();
-
-            //var entity = mapper.Map<AlterarPesoAltura>(string cpf, int peso, int altura);
-            //entity.User = autenticacao.CodigoUsuario;
-
-
-            if (cpf.Length != 11) return new BadRequestObjectResult("CPF INVALIDO");
-
+ 
             var resultado = await service.UpdatePesoAlturaAsync(cpf, peso, altura);
-
-            
 
             if (resultado.BadRequest)
                 return new BadRequestObjectResult(resultado);
 
-            return new ObjectResult(resultado.Conteudo);
+            return new ObjectResult(resultado.Conteudo.retorno);
         }
 
         //[HttpGet]

@@ -130,7 +130,7 @@ namespace Services.Services
                     return Resultado<AlterarPesoAltura>.ComErros(null, Resultado<AlterarPesoAltura>.AdicionarErro(Error.Criar(string.Empty, resultado.retorno, TipoErro.Validacao, null)));
                 }
 
-                return Resultado<AlterarPesoAltura>.ComSucesso(resultado);
+                return Resultado<AlterarPesoAltura>.ComSucesso (resultado);
             }
             catch (Exception exception)
             {
