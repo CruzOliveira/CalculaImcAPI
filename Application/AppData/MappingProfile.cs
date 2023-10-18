@@ -8,6 +8,7 @@ namespace Application.AppData
         public MappingProfile()
         {
             this.CreateMap<Domain.DTO.CriadorUser, CriadorUser>();
+            this.CreateMap<Domain.DTO.ExcluirUsuario, ExcluirUsuario>();
         }
     }
 }

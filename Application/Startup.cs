@@ -162,6 +162,8 @@ namespace Application
             var connectionString = this.Configuration.GetValue<string>("ConnectionStrings:dbConnectionString");
 
             services.AddScoped<IDbConnection>(x => { return new SqlConnection(connectionString); });
+            services.AddScoped<IExcluirUsuarioService, ExcluirUsuarioService>();
+            services.AddScoped<IAlterarSenhaService, AlterarSenhaService>();
             services.AddScoped<IAlterarPesoAlturaService, AlterarPesoAlturaService>();
             services.AddScoped<ICriadorUserService, CriadorUserService>();
         }
@@ -177,6 +179,8 @@ namespace Application
         private void ConfigurarValidador(IServiceCollection services)
         {
             services.AddScoped<IValidator<CriadorUser>, CriadorUserValidator>();
+            services.AddScoped<IValidator<ExcluirUsuario>, ExcluirUsuarioValidator>();
+            services.AddScoped<IValidator<AlterarSenha>, AlterarSenhaValidator>();
             services.AddScoped<IValidator<AlterarPesoAltura>, AlterarPesoAlturaValidator>();
         }
         private void ConfigurarMapper(IServiceCollection services)
