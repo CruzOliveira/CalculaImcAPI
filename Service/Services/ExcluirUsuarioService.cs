@@ -118,5 +118,23 @@ namespace Services.Services
         {
             GC.SuppressFinalize(this);
         }
+
+        public async Task<Resultado<ExcluirUsuario>> DeleteUserAsync(int id, string senha)
+        {
+            try
+            {
+                var resultado = await this.infrastructure.DeleteUserAsync(id, senha);
+
+                if (resultado.retorno.Contains("Erro"))
+                {
+                    return Resultado<ExcluirUsuario>.ComErros(null, Resultado<ExcluirUsuario>.AdicionarErro(Error.Criar(string.Empty, resultado.retorno, TipoErro.Validacao, null)));
+                }
+                return Resultado<ExcluirUsuario>.ComSucesso(resultado);
+            }
+            catch (Exception exception)
+            {
+                return Resultado<ExcluirUsuario>.ComErros(null, Resultado<ExcluirUsuario>.AdicionarErro(Error.Criar(string.Empty, $"{exception}", TipoErro.Excecao, null)));
+            }
+        }
     }
 }

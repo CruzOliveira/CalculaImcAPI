@@ -66,5 +66,28 @@ namespace Infrastructure.Repository
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        public async Task<ExcluirUsuario> DeleteUserAsync(int id, string senha)
+        {
+            var dynamic = new DynamicParameters();
+            var result = new ExcluirUsuario();
+
+            try
+            {
+                dynamic.Add("ID", id);
+                dynamic.Add("PASSWORD", senha);
+                dynamic.Add("retorno", dbType: DbType.String, value: string.Empty, direction: ParameterDirection.Output);
+
+                await dbConnection.ExecuteScalarAsync<ExcluirUsuario>("IMC_SP_DELETAR_USUARIO", dynamic, commandType: CommandType.StoredProcedure);
+                
+                result.retorno = dynamic.Get<string>("retorno");
+
+                return result;
+            }
+            finally
+            {
+                dynamic = null;
+            }
+        }
     }
 }
