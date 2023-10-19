@@ -80,8 +80,8 @@ namespace Infrastructure.Repository
                 await dbConnection.ExecuteScalarAsync<ResultadoIMC>("IMC_SP_RESULTADO", dynamic, commandType: CommandType.StoredProcedure);
 
                 result.retorno = dynamic.Get<string>("retorno");
+                return result;
 
-      
             }
             finally
             {
@@ -89,7 +89,7 @@ namespace Infrastructure.Repository
 
 
             }
-            return result;
+            
 
         }
     }
