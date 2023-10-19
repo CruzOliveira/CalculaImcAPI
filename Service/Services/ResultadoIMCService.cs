@@ -123,12 +123,22 @@ namespace Services.Services
         {
             try
             {
-                return Resultado<ResultadoIMC>.ComSucesso(await this.infrastructure.CreateResultadoAsync(info_user_id));
+                var resultado = await this.infrastructure.CreateResultadoAsync(info_user_id);
+
+                if (resultado.retorno.Contains("Erro"))
+                {
+                    return Resultado<ResultadoIMC>.ComErros(null, Resultado<ResultadoIMC>.AdicionarErro(Error.Criar(string.Empty, resultado.retorno, TipoErro.Validacao, null)));
+                }
+
+                return Resultado<ResultadoIMC>.ComSucesso(resultado);
             }
             catch (Exception exception)
             {
                 return Resultado<ResultadoIMC>.ComErros(null, Resultado<ResultadoIMC>.AdicionarErro(Error.Criar(string.Empty, $"{exception}", TipoErro.Excecao, null)));
             }
+
         }
     }
 }
+
+
