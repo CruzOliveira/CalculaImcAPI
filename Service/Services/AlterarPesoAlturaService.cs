@@ -119,11 +119,11 @@ namespace Services.Services
             GC.SuppressFinalize(this);
         }
 
-        public async Task<Resultado<AlterarPesoAltura>> UpdatePesoAlturaAsync(string cpf, decimal peso, decimal altura)
+        public async Task<Resultado<AlterarPesoAltura>> UpdatePesoAlturaAsync(int id_user, decimal peso, decimal altura)
         {
             try
             {
-                var resultado = await this.infrastructure.UpdatePesoAlturaAsync(cpf, peso, altura);
+                var resultado = await this.infrastructure.UpdatePesoAlturaAsync(id_user, peso, altura);
 
                 if (resultado.retorno.Contains("Erro"))
                 {

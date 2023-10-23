@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Services.Validators
 {
-    public class ResultadoIMCValidator : AbstractValidator<ResultadoIMC>
+    public class ConsultaUserValidator : AbstractValidator<ConsultaUser>
     {
-        public ResultadoIMCValidator()
+        public ConsultaUserValidator()
         {
             ////EXEMPLO
             //RuleFor(c => c.Login)

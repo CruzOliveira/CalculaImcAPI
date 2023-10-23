@@ -12,33 +12,38 @@ namespace Application.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ExcluirUsuarioController : Controller
+    public class CriadorIMCController : Controller
     {
-        private readonly IExcluirUsuarioService service;
+        private readonly ICriadorIMCService service;
         private readonly IMapper mapper;
         private readonly string chaveToken;
 
-        public ExcluirUsuarioController(IConfiguration configuration, IExcluirUsuarioService service, IMapper mapper)
+        public CriadorIMCController(IConfiguration configuration, ICriadorIMCService service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
             this.chaveToken = configuration.GetSection("Seguranca:ChaveToken").Value;
         }
 
-        [HttpDelete]
+        [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Delete(int id, string senha )
+        public async Task<IActionResult> Create(int id_user, decimal peso, decimal altura)
         {
             //var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
             //if (autenticacao == null)
             //    return Unauthorized();
 
-            var resultado = await service.DeleteUserAsync(id, senha);
+            //var entity = mapper.Map<ResultadoIMC>(info_user_id);
+            //entity.User = autenticacao.CodigoUsuario;
+
+            var resultado = await service.CreateResultadoAsync(id_user, peso, altura);
+
             if (resultado.BadRequest)
                 return new BadRequestObjectResult(resultado);
 
             return new ObjectResult(resultado.Conteudo.retorno);
         }
+        
 
         //[HttpGet]
         //public async Task<IActionResult> List()
@@ -54,10 +59,10 @@ namespace Application.Controllers
         //    return new ObjectResult(resultado.Conteudo);
         //}
 
-        //GET api/todo
-        /// <summary>
-        /// Obtém um(a) ExcluirUsuario
-        /// </summary>
+        //// GET api/todo
+        ///// <summary>
+        ///// Obtém um(a) ResultadoIMC
+        ///// </summary>
         //[HttpGet("{codigo}")]
         //public async Task<IActionResult> Get(int codigo)
         //{
@@ -72,18 +77,18 @@ namespace Application.Controllers
         //    return new ObjectResult(resultado.Conteudo);
         //}
 
-        //PATCH api/todo
-        /// <summary>
-        /// Retorna uma lista de ExcluirUsuario
-        /// </summary>
+        //// PATCH api/todo
+        ///// <summary>
+        ///// Retorna uma lista de ResultadoIMC
+        ///// </summary>
         //[HttpPatch]
-        //public async Task<IActionResult> Select(Domain.DTO.ExcluirUsuario entityIn)
+        //public async Task<IActionResult> Select(Domain.DTO.ResultadoIMC entityIn)
         //{
         //    var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
         //    if (autenticacao == null)
         //        return Unauthorized();
 
-        //    var entity = mapper.Map<ExcluirUsuario>(entityIn);
+        //    var entity = mapper.Map<ResultadoIMC>(entityIn);
 
         //    var resultado = await service.SelectAsync(entity);
         //    if (resultado.BadRequest)
@@ -92,18 +97,18 @@ namespace Application.Controllers
         //    return new ObjectResult(resultado.Conteudo);
         //}
 
-        //POST api/todo
-        /// <summary>
-        /// Cria um(a) novo(a) ExcluirUsuario
-        /// </summary>
+        //// POST api/todo
+        ///// <summary>
+        ///// Cria um(a) novo(a) ResultadoIMC
+        ///// </summary>
         //[HttpPost]
-        //public async Task<IActionResult> Create(Domain.DTO.ExcluirUsuario entityIn)
+        //public async Task<IActionResult> Create(Domain.DTO.ResultadoIMC entityIn)
         //{
         //    var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
         //    if (autenticacao == null)
         //        return Unauthorized();
 
-        //    var entity = mapper.Map<ExcluirUsuario>(entityIn);
+        //    var entity = mapper.Map<ResultadoIMC>(entityIn);
         //    entity.User = autenticacao.CodigoUsuario;
 
         //    var resultado = await service.CreateAsync(entity);
@@ -114,18 +119,18 @@ namespace Application.Controllers
         //}
 
 
-        //PUT api/todo
-        /// <summary>
-        /// Altera um(a) novo(a) ExcluirUsuario
-        /// </summary>
+        //// PUT api/todo
+        ///// <summary>
+        ///// Altera um(a) novo(a) ResultadoIMC
+        ///// </summary>
         //[HttpPut]
-        //public async Task<IActionResult> Update(Domain.DTO.ExcluirUsuario entityIn)
+        //public async Task<IActionResult> Update(Domain.DTO.ResultadoIMC entityIn)
         //{
         //    var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
         //    if (autenticacao == null)
         //        return Unauthorized();
 
-        //    var entity = mapper.Map<ExcluirUsuario>(entityIn);
+        //    var entity = mapper.Map<ResultadoIMC>(entityIn);
         //    entity.User = autenticacao.CodigoUsuario;
 
         //    var resultado = await service.UpdateAsync(entity);
@@ -135,10 +140,10 @@ namespace Application.Controllers
         //    return new ObjectResult(resultado.Conteudo);
         //}
 
-        //DELETE api/todo
-        /// <summary>
-        /// Exclui um(a) ExcluirUsuario
-        /// </summary>
+        //// DELETE api/todo
+        ///// <summary>
+        ///// Exclui um(a) ResultadoIMC
+        ///// </summary>
         //[HttpDelete]
         //public async Task<IActionResult> Delete(int codigo)
         //{

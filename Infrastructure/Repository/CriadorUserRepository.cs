@@ -79,8 +79,6 @@ namespace Infrastructure.Repository
                 dynamic.Add("EMAIL", entity.email);
                 dynamic.Add("NOME", entity.nome);
                 dynamic.Add("CPF", entity.cpf);
-                dynamic.Add("PESO", entity.peso);
-                dynamic.Add("ALTURA", entity.altura);
                 dynamic.Add("DT_NACIMENTO", entity.dt_nacimento.ToString().Equals("01/01/0001 00:00:00") ? Convert.ToDateTime("1900-01-01") : entity.dt_nacimento);
                 dynamic.Add("retorno", dbType: DbType.String, value: string.Empty, direction: ParameterDirection.Output);
 

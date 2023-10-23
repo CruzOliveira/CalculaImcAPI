@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace Services.Validators
 {
-    public class ExcluirUsuarioValidator : AbstractValidator<ExcluirUsuario>
+    public class CriadorIMCValidator : AbstractValidator<CriadorIMC>
     {
-        public ExcluirUsuarioValidator()
+        public CriadorIMCValidator()
         {
             ////EXEMPLO
             //RuleFor(c => c.Login)

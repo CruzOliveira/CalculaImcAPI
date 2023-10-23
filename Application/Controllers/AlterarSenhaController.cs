@@ -27,10 +27,10 @@ namespace Application.Controllers
 
         [HttpPut]
         [AllowAnonymous]
-        public async Task<IActionResult> Update(int id, string senhaAtual, string senhaNova)
+        public async Task<IActionResult> Update(int id_user, string senhaAtual, string senhaNova)
         {
 
-            var resultado = await service.UpdateAlterarSenhaAsync(id, senhaAtual, senhaNova);
+            var resultado = await service.UpdateAlterarSenhaAsync(id_user, senhaAtual, senhaNova);
 
             if (resultado.BadRequest)
                 return new BadRequestObjectResult(resultado);

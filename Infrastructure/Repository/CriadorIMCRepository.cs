@@ -8,43 +8,43 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    public class ExcluirUsuarioRepository : IExcluirUsuarioRepository
+    public class CriadorIMCRepository : ICriadorIMCRepository
     {
         private readonly IDbConnection dbConnection;
         private bool disposedValue;
 
-        public ExcluirUsuarioRepository(IDbConnection dbConnection)
+        public CriadorIMCRepository(IDbConnection dbConnection)
         {
             this.dbConnection = dbConnection;
         }
 
 
-        public async Task<IEnumerable<ExcluirUsuario>> ListAsync()
+        public async Task<IEnumerable<CriadorIMC>> ListAsync()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ExcluirUsuario> GetAsync(int code)
+        public async Task<CriadorIMC> GetAsync(int code)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ExcluirUsuario>> SelectAsync(ExcluirUsuario entity)
+        public async Task<IEnumerable<CriadorIMC>> SelectAsync(CriadorIMC entity)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ExcluirUsuario> CreateAsync(ExcluirUsuario entity)
+        public async Task<CriadorIMC> CreateAsync(CriadorIMC entity)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ExcluirUsuario> UpdateAsync(ExcluirUsuario entity)
+        public async Task<CriadorIMC> UpdateAsync(CriadorIMC entity)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ExcluirUsuario> DeleteAsync(int code, int user)
+        public async Task<CriadorIMC> DeleteAsync(int code, int user)
         {
             throw new NotImplementedException();
         }
@@ -67,27 +67,32 @@ namespace Infrastructure.Repository
             GC.SuppressFinalize(this);
         }
 
-        public async Task<ExcluirUsuario> DeleteUserAsync(int id, string senha)
+        public async Task<CriadorIMC> CreateResultadoAsync(int id_user, decimal peso, decimal altura)
         {
             var dynamic = new DynamicParameters();
-            var result = new ExcluirUsuario();
+            var result = new CriadorIMC();
 
             try
             {
-                dynamic.Add("ID", id);
-                dynamic.Add("PASSWORD", senha);
+                dynamic.Add("ID_USER", id_user);
+                dynamic.Add("PESO", peso);
+                dynamic.Add("ALTURA", altura);
                 dynamic.Add("retorno", dbType: DbType.String, value: string.Empty, direction: ParameterDirection.Output);
 
-                await dbConnection.ExecuteScalarAsync<ExcluirUsuario>("IMC_SP_DELETAR_USUARIO", dynamic, commandType: CommandType.StoredProcedure);
-                
-                result.retorno = dynamic.Get<string>("retorno");
+                await dbConnection.ExecuteScalarAsync<CriadorIMC>("IMC_SP_CRIACAO_RESULTADO", dynamic, commandType: CommandType.StoredProcedure);
 
+                result.retorno = dynamic.Get<string>("retorno");
                 return result;
+
             }
             finally
             {
                 dynamic = null;
+
+
             }
+            
+
         }
     }
 }

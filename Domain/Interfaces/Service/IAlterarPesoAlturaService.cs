@@ -7,6 +7,6 @@ namespace Domain.Interfaces.Service
 {
     public interface IAlterarPesoAlturaService : IService<AlterarPesoAltura>
     {
-        Task<Resultado<AlterarPesoAltura>> UpdatePesoAlturaAsync(string cpf, decimal peso, decimal altura);
+        Task<Resultado<AlterarPesoAltura>> UpdatePesoAlturaAsync(int id_user, decimal peso, decimal altura);
     }
 }

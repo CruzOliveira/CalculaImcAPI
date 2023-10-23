@@ -6,6 +6,6 @@ namespace Domain.Interfaces.Repository
 {
     public interface IAlterarSenhaRepository: IRepository<AlterarSenha>
     {
-        Task<AlterarSenha> UpdateAlterarSenhaAsync(int id, string senhaAtual, string senhaNova);
+        Task<AlterarSenha> UpdateAlterarSenhaAsync(int id_user, string senhaAtual, string senhaNova);
     }
 }

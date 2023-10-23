@@ -60,13 +60,13 @@ namespace Infrastructure.Repository
                 disposedValue = true;
             }
         }
-        public async Task<AlterarSenha> UpdateAlterarSenhaAsync(int id, string senhaAtual, string senhaNova)
+        public async Task<AlterarSenha> UpdateAlterarSenhaAsync(int id_user, string senhaAtual, string senhaNova)
         {
             var dynamic = new DynamicParameters();
             var result = new AlterarSenha();
             try
             {
-                dynamic.Add("ID", id);
+                dynamic.Add("ID_USER", id_user);
                 dynamic.Add("SENHA_ATUAL", senhaAtual);
                 dynamic.Add("NOVA_SENHA", senhaNova);
                 dynamic.Add("retorno", dbType: DbType.String, value: string.Empty, direction: ParameterDirection.Output);

@@ -12,38 +12,32 @@ namespace Application.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ResultadoIMCController : Controller
+    public class ConsultaUserController : Controller
     {
-        private readonly IResultadoIMCService service;
+        private readonly IConsultaUserService service;
         private readonly IMapper mapper;
         private readonly string chaveToken;
 
-        public ResultadoIMCController(IConfiguration configuration, IResultadoIMCService service, IMapper mapper)
+        public ConsultaUserController(IConfiguration configuration, IConsultaUserService service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
             this.chaveToken = configuration.GetSection("Seguranca:ChaveToken").Value;
         }
-
-        [HttpPost]
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Create(int info_user_id)
+        public async Task<IActionResult> Get(int id_user)
         {
             //var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
             //if (autenticacao == null)
             //    return Unauthorized();
 
-            //var entity = mapper.Map<ResultadoIMC>(info_user_id);
-            //entity.User = autenticacao.CodigoUsuario;
-
-            var resultado = await service.CreateResultadoAsync(info_user_id);
-
+            var resultado = await service.GetConsultaAsync(id_user);
             if (resultado.BadRequest)
                 return new BadRequestObjectResult(resultado);
 
-            return new ObjectResult(resultado.Conteudo.retorno);
+            return new ObjectResult(resultado.Conteudo);
         }
-        
 
         //[HttpGet]
         //public async Task<IActionResult> List()
@@ -61,7 +55,7 @@ namespace Application.Controllers
 
         //// GET api/todo
         ///// <summary>
-        ///// Obtém um(a) ResultadoIMC
+        ///// Obtém um(a) ConsultaUser
         ///// </summary>
         //[HttpGet("{codigo}")]
         //public async Task<IActionResult> Get(int codigo)
@@ -79,16 +73,16 @@ namespace Application.Controllers
 
         //// PATCH api/todo
         ///// <summary>
-        ///// Retorna uma lista de ResultadoIMC
+        ///// Retorna uma lista de ConsultaUser
         ///// </summary>
         //[HttpPatch]
-        //public async Task<IActionResult> Select(Domain.DTO.ResultadoIMC entityIn)
+        //public async Task<IActionResult> Select(Domain.DTO.ConsultaUser entityIn)
         //{
         //    var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
         //    if (autenticacao == null)
         //        return Unauthorized();
 
-        //    var entity = mapper.Map<ResultadoIMC>(entityIn);
+        //    var entity = mapper.Map<ConsultaUser>(entityIn);
 
         //    var resultado = await service.SelectAsync(entity);
         //    if (resultado.BadRequest)
@@ -99,16 +93,16 @@ namespace Application.Controllers
 
         //// POST api/todo
         ///// <summary>
-        ///// Cria um(a) novo(a) ResultadoIMC
+        ///// Cria um(a) novo(a) ConsultaUser
         ///// </summary>
         //[HttpPost]
-        //public async Task<IActionResult> Create(Domain.DTO.ResultadoIMC entityIn)
+        //public async Task<IActionResult> Create(Domain.DTO.ConsultaUser entityIn)
         //{
         //    var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
         //    if (autenticacao == null)
         //        return Unauthorized();
 
-        //    var entity = mapper.Map<ResultadoIMC>(entityIn);
+        //    var entity = mapper.Map<ConsultaUser>(entityIn);
         //    entity.User = autenticacao.CodigoUsuario;
 
         //    var resultado = await service.CreateAsync(entity);
@@ -121,16 +115,16 @@ namespace Application.Controllers
 
         //// PUT api/todo
         ///// <summary>
-        ///// Altera um(a) novo(a) ResultadoIMC
+        ///// Altera um(a) novo(a) ConsultaUser
         ///// </summary>
         //[HttpPut]
-        //public async Task<IActionResult> Update(Domain.DTO.ResultadoIMC entityIn)
+        //public async Task<IActionResult> Update(Domain.DTO.ConsultaUser entityIn)
         //{
         //    var autenticacao = Utils.ValidaToken(User.Claims, this.chaveToken);
         //    if (autenticacao == null)
         //        return Unauthorized();
 
-        //    var entity = mapper.Map<ResultadoIMC>(entityIn);
+        //    var entity = mapper.Map<ConsultaUser>(entityIn);
         //    entity.User = autenticacao.CodigoUsuario;
 
         //    var resultado = await service.UpdateAsync(entity);
@@ -142,7 +136,7 @@ namespace Application.Controllers
 
         //// DELETE api/todo
         ///// <summary>
-        ///// Exclui um(a) ResultadoIMC
+        ///// Exclui um(a) ConsultaUser
         ///// </summary>
         //[HttpDelete]
         //public async Task<IActionResult> Delete(int codigo)

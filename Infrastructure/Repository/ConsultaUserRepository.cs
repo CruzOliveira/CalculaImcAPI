@@ -1,50 +1,53 @@
 using Dapper;
+using Domain.Base;
 using Domain.Entities;
 using Domain.Interfaces.Repository;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Repository
 {
-    public class ResultadoIMCRepository : IResultadoIMCRepository
+    public class ConsultaUserRepository : IConsultaUserRepository
     {
         private readonly IDbConnection dbConnection;
         private bool disposedValue;
 
-        public ResultadoIMCRepository(IDbConnection dbConnection)
+        public ConsultaUserRepository(IDbConnection dbConnection)
         {
             this.dbConnection = dbConnection;
         }
 
 
-        public async Task<IEnumerable<ResultadoIMC>> ListAsync()
+        public async Task<IEnumerable<ConsultaUser>> ListAsync()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ResultadoIMC> GetAsync(int code)
+        public async Task<ConsultaUser> GetAsync(int code)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ResultadoIMC>> SelectAsync(ResultadoIMC entity)
+        public async Task<IEnumerable<ConsultaUser>> SelectAsync(ConsultaUser entity)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ResultadoIMC> CreateAsync(ResultadoIMC entity)
+        public async Task<ConsultaUser> CreateAsync(ConsultaUser entity)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ResultadoIMC> UpdateAsync(ResultadoIMC entity)
+        public async Task<ConsultaUser> UpdateAsync(ConsultaUser entity)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ResultadoIMC> DeleteAsync(int code, int user)
+        public async Task<ConsultaUser> DeleteAsync(int code, int user)
         {
             throw new NotImplementedException();
         }
@@ -67,30 +70,29 @@ namespace Infrastructure.Repository
             GC.SuppressFinalize(this);
         }
 
-        public async Task<ResultadoIMC> CreateResultadoAsync(int info_user_id)
+        public async Task<ListConsultaUser> GetConsultaAsync(int id_user)
         {
             var dynamic = new DynamicParameters();
-            var result = new ResultadoIMC();
+            var resultado = string.Empty;
+            ListConsultaUser List = new ListConsultaUser();
 
-            try
+            dynamic.Add("ID_USER", id_user);
+
+            var result = await dbConnection.QueryAsync<string>("IMC_SP_CONSULTA_USUARIO", dynamic, commandType: CommandType.StoredProcedure);
+
+            if (result != null)
             {
-                dynamic.Add("INFO_USER_ID", info_user_id);
-                dynamic.Add("retorno", dbType: DbType.String, value: string.Empty, direction: ParameterDirection.Output);
-
-                await dbConnection.ExecuteScalarAsync<ResultadoIMC>("IMC_SP_RESULTADO", dynamic, commandType: CommandType.StoredProcedure);
-
-                result.retorno = dynamic.Get<string>("retorno");
-                return result;
-
+             resultado = result.FirstOrDefault();
+                
+             List = JsonConvert.DeserializeObject<ListConsultaUser>(resultado);
             }
-            finally
+            else
             {
-                dynamic = null;
-
-
+                throw new Exception("Não foram encontrados registros!");
             }
-            
 
+            return List;
         }
-    }
+    }    
 }
+

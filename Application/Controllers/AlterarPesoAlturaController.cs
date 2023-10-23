@@ -27,10 +27,10 @@ namespace Application.Controllers
 
         [HttpPut]
         [AllowAnonymous]
-        public async Task<IActionResult> Update(string cpf, decimal peso, decimal altura)
+        public async Task<IActionResult> Update(int id_user, decimal peso, decimal altura)
         {
  
-            var resultado = await service.UpdatePesoAlturaAsync(cpf, peso, altura);
+            var resultado = await service.UpdatePesoAlturaAsync(id_user, peso, altura);
 
             if (resultado.BadRequest)
                 return new BadRequestObjectResult(resultado);

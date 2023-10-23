@@ -10,8 +10,6 @@ namespace Domain.DTO
         public string email { get; set; }
         public string nome { get; set; }
         public string cpf { get; set; }
-        public decimal peso { get; set; }
-        public decimal altura { get; set; }
         public DateTime dt_nacimento { get; set; }
     }
 }

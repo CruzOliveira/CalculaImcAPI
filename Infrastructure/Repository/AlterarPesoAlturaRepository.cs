@@ -68,13 +68,13 @@ namespace Infrastructure.Repository
             GC.SuppressFinalize(this);
         }
 
-        public async Task<AlterarPesoAltura> UpdatePesoAlturaAsync(string cpf, decimal peso, decimal altura)
+        public async Task<AlterarPesoAltura> UpdatePesoAlturaAsync(int id_user, decimal peso, decimal altura)
         {
             var dynamic = new DynamicParameters();
             var result = new AlterarPesoAltura();
             try
             {
-                dynamic.Add("CPF", cpf);
+                dynamic.Add("ID_USER", id_user);
                 dynamic.Add("PESO", peso);
                 dynamic.Add("ALTURA", altura);
                 dynamic.Add("retorno", dbType: DbType.String,value:string.Empty, direction: ParameterDirection.Output);

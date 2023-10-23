@@ -119,11 +119,11 @@ namespace Services.Services
             GC.SuppressFinalize(this);
         }
         
-        public async Task<Resultado<AlterarSenha>> UpdateAlterarSenhaAsync(int id, string senhaAtual, string senhaNova)
+        public async Task<Resultado<AlterarSenha>> UpdateAlterarSenhaAsync(int id_user, string senhaAtual, string senhaNova)
         {
             try
             {
-                var resultado = await this.infrastructure.UpdateAlterarSenhaAsync(id, senhaAtual, senhaNova);
+                var resultado = await this.infrastructure.UpdateAlterarSenhaAsync(id_user, senhaAtual, senhaNova);
 
                 if (resultado.retorno.Contains("Erro"))
                 {
